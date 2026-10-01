@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>心岸 · MindAnchor — 你看起来有一些困惑</title>
+  <meta name="description" content="一个安全、无评判的倾诉空间。六章关于情绪、焦虑、低落、关系、关怀与求助的小书。">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Fraunces', '"Noto Serif SC"', 'Georgia', 'serif'],
+            sans: ['Inter', '"Noto Sans SC"', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            ink:   '#0e0d0b',
+            cream: '#f5f1ea',
+            sage:  '#a8b5a2',
+          }
+        }
+      }
+    }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..700&family=Inter:wght@300..700&family=Noto+Sans+SC:wght@300..700&family=Noto+Serif+SC:wght@300..700&display=swap" rel="stylesheet">
+
+  <style>
+    html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+    body {
+      background: #0e0d0b;
+      color: #f5f1ea;
+      font-family: 'Inter', 'Noto Sans SC', system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overflow-x: hidden;
+    }
+    .font-display { font-family: 'Fraunces', 'Noto Serif SC', Georgia, serif; }
+    ::selection { background: rgba(168,181,162,.28); }
+
+    video { pointer-events: none; user-select: none; }
+
+    .view { animation: fadeUp .5s cubic-bezier(.2,.8,.2,1) both; }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    .menu-panel {
+      transition: opacity .4s cubic-bezier(0.16,1,0.3,1),
+                  transform .4s cubic-bezier(0.16,1,0.3,1);
+    }
+
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid #a8b5a2;
+      outline-offset: 3px;
+      border-radius: 6px;
+    }
+
+    /* 章节行 hover */
+    .chapter-row { transition: background-color .3s ease; }
+    .chapter-row:hover { background: rgba(255,255,255,.025); }
+    .chapter-row:hover .chapter-arrow { transform: translateX(4px); color: #a8b5a2; }
+    .chapter-arrow { transition: transform .3s ease, color .3s ease; }
+
+    /* 章节正文排版 */
+    .prose-soft p { color: rgba(245,241,234,.62); line-height: 1.9; margin-bottom: 1.15rem; font-size: 15px; }
+    @media (min-width: 640px) { .prose-soft p { font-size: 16px; } }
+    .prose-soft h3 {
+      font-family: 'Fraunces', 'Noto Serif SC', Georgia, serif;
+      color: #f5f1ea;
+      font-size: 20px;
+      margin: 2.75rem 0 1rem;
+      font-weight: 500;
+    }
+    @media (min-width: 640px) { .prose-soft h3 { font-size: 24px; } }
+    .prose-soft blockquote {
+      font-family: 'Fraunces', 'Noto Serif SC', Georgia, serif;
+      border-left: 1px solid rgba(168,181,162,.55);
+      padding-left: 1.25rem;
+      margin: 2.5rem 0;
+      color: rgba(245,241,234,.88);
+      font-size: 19px;
+      line-height: 1.65;
+      font-style: italic;
+    }
+    @media (min-width: 640px) { .prose-soft blockquote { font-size: 23px; } }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      html { scroll-behavior: auto; }
+      video { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ============ 首页视图 ============ -->
+<main id="view-home" class="view">
+
+  <!-- ---------- Hero ---------- -->
+  <section class="relative min-h-screen w-full flex flex-col">
+
+    <video autoplay loop muted playsinline aria-hidden="true"
+           class="absolute inset-0 w-full h-full object-cover">
+      <source src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260703_053131_1ec3dd1c-d627-44fb-ab20-6e1fce41b0d5.mp4" type="video/mp4">
+    </video>
+
+    <div class="absolute inset-0 bg-black/45"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-black/60 via-black/15 to-[#0e0d0b]"></div>
+
+    <!-- ---------- 导航 ---------- -->
+    <nav class="relative z-30 w-full px-5 sm:px-6 md:px-12 lg:px-16 py-4 sm:py-5">
+      <div class="flex items-center justify-between">
+
+        <!-- Logo -->
+        <a href="#" class="flex items-center gap-2.5 shrink-0" aria-label="心岸 MindAnchor">
+          <svg width="26" height="26" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+            <path d="M12 2 L24 14 L12 26 L0 14 Z" fill="#f5f1ea" fill-opacity="0.92"/>
+            <path d="M16 2 L28 14 L16 26 L4 14 Z" fill="#a8b5a2" fill-opacity="0.55"/>
+          </svg>
+          <span class="text-cream text-lg sm:text-xl font-medium tracking-tight">
+            <span data-i18n="brandZh">心岸</span>
+            <span class="text-cream/40 mx-1">·</span>
+            <span class="text-cream/70 text-sm sm:text-base">MindAnchor</span>
+          </span>
+        </a>
+
+        <!-- 桌面端导航 -->
+        <div class="hidden lg:flex items-center gap-9">
+          <a href="#book"   class="text-cream/85 hover:text-cream text-sm font-medium transition-colors" data-i18n="navBook">小书</a>
+          <a href="#quotes" class="text-cream/85 hover:text-cream text-sm font-medium transition-colors" data-i18n="navQuotes">一些话</a>
+          <a href="#help"   class="text-cream/85 hover:text-cream text-sm font-medium transition-colors" data-i18n="navHelp">紧急求助</a>
+        </div>
+
+        <!-- 桌面端 CTA -->
+        <div class="hidden lg:flex items-center gap-5">
+          <button id="lang-toggle-desktop" class="text-cream/70 hover:text-cream text-sm font-medium transition-colors tracking-wide" aria-label="Switch language">EN</button>
+          <a href="#book" class="rounded-full px-5 py-2 bg-cream text-ink text-sm font-semibold hover:bg-white transition-colors" data-i18n="ctaStart">开始倾诉</a>
+        </div>
+
+        <!-- 移动端：语言 + 汉堡 -->
+        <div class="lg:hidden flex items-center gap-2">
+          <button id="lang-toggle-mobile" class="text-cream/80 text-sm font-medium px-3 py-2 tracking-wide" aria-label="Switch language">EN</button>
+          <button id="menu-btn"
+                  class="relative w-10 h-10 flex items-center justify-center text-cream"
+                  aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu">
+            <!-- 汉堡 -->
+            <svg id="icon-burger" class="absolute w-6 h-6 transition-all duration-300"
+                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+              <path d="M4 8h16M4 16h16"/>
+            </svg>
+            <!-- 关闭 -->
+            <svg id="icon-close" class="absolute w-6 h-6 transition-all duration-300 rotate-90 scale-0 opacity-0"
+                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+              <path d="M6 6l12 12M18 6L6 18"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- 移动端菜单 -->
+      <div id="mobile-menu"
+           class="menu-panel lg:hidden absolute left-5 right-5 sm:left-6 sm:right-6 top-full mt-2 z-40 opacity-0 -translate-y-3 pointer-events-none">
+        <div class="bg-[#181613]/95 backdrop-blur-xl rounded-2xl p-6 border border-white/10 shadow-2xl">
+          <div class="flex flex-col gap-1">
+            <a href="#book"   class="mobile-link text-cream text-base font-medium py-3 px-3 rounded-lg hover:bg-white/5 transition-colors" data-i18n="navBook">小书</a>
+            <a href="#quotes" class="mobile-link text-cream text-base font-medium py-3 px-3 rounded-lg hover:bg-white/5 transition-colors" data-i18n="navQuotes">一些话</a>
+            <a href="#help"   class="mobile-link text-cream text-base font-medium py-3 px-3 rounded-lg hover:bg-white/5 transition-colors" data-i18n="navHelp">紧急求助</a>
+          </div>
+          <div class="border-t border-white/10 mt-4 pt-5">
+            <a href="#book" class="mobile-link block text-center rounded-full px-5 py-3 bg-cream text-ink text-sm font-semibold" data-i18n="ctaStart">开始倾诉</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- ---------- Hero 内容 ---------- -->
+    <div class="relative z-10 flex-1 flex items-start justify-center px-5 sm:px-6 pt-14 sm:pt-20 md:pt-24 pb-24">
+      <div class="text-center max-w-3xl">
+
+        <div class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.06] backdrop-blur-sm px-4 py-1.5 mb-8">
+          <span class="w-1.5 h-1.5 rounded-full bg-sage"></span>
+          <span class="text-cream/75 text-xs sm:text-sm tracking-wide" data-i18n="badge">安全 · 无评判 · 随时在这里</span>
+        </div>
+
+        <h1 data-i18n-html="h1"
+            class="font-display text-cream text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-[1.15] tracking-[-0.02em] font-medium">
+          你看起来有一些困惑，<br>需要心理疏导
+        </h1>
+
+        <p class="text-cream/70 text-sm sm:text-base md:text-lg leading-relaxed max-w-lg mx-auto mt-7 sm:mt-8"
+           data-i18n="sub">
+          不用马上讲清楚。你可以从任何一句话开始，我们会一直在这里，慢慢听。
+        </p>
+
+        <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mt-8 sm:mt-10">
+          <a href="#book"
+             class="px-6 py-3 bg-cream text-ink text-sm font-semibold rounded-full hover:bg-white transition-colors"
+             data-i18n="ctaStart">开始倾诉</a>
+          <a href="#quotes"
+             class="px-6 py-3 rounded-full text-cream text-sm font-semibold border border-white/20 bg-white/[0.04] backdrop-blur-sm hover:bg-white/10 transition-colors"
+             data-i18n="ctaQuotes">先看几句话</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- 一些话 ---------- -->
+  <section id="quotes" class="relative bg-[#0e0d0b] px-5 sm:px-6 md:px-12 lg:px-16 py-24 sm:py-32">
+    <div class="max-w-5xl mx-auto">
+      <p class="text-sage/70 text-[11px] tracking-[0.32em] uppercase mb-14" data-i18n="quotesLabel">Some words</p>
+
+      <div class="space-y-12 sm:space-y-16">
+        <p class="font-display text-2xl sm:text-3xl md:text-4xl leading-snug text-cream/95" data-i18n="q1">
+          你不需要马上好起来。
+        </p>
+        <p class="font-display text-xl sm:text-2xl md:text-3xl leading-snug text-cream/70 sm:pl-16" data-i18n="q2">
+          允许自己停在这里，也是一种前进。
+        </p>
+        <p class="font-display text-xl sm:text-2xl md:text-3xl leading-snug text-cream/70 sm:pl-32" data-i18n="q3">
+          所有情绪都是路标，不是判决。
+        </p>
+        <p class="font-display text-lg sm:text-xl md:text-2xl leading-snug text-cream/50 sm:pl-48" data-i18n="q4">
+          说出来，就已经是一种勇敢。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ---------- 小书：章节列表（IPCC 风格） ---------- -->
+  <section id="book" class="relative bg-[#0e0d0b] px-5 sm:px-6 md:px-12 lg:px-16 pb-28 sm:pb-36">
+    <div class="max-w-5xl mx-auto">
+
+      <div class="border-t border-white/10 pt-12 mb-4">
+        <p class="text-sage/70 text-[11px] tracking-[0.32em] uppercase mb-5" data-i18n="bookLabel">A small book</p>
+        <h2 class="font-display text-3xl sm:text-4xl md:text-5xl text-cream font-medium tracking-[-0.02em]"
+            data-i18n="bookTitle">一本关于照顾自己的小书</h2>
+        <p class="text-cream/45 mt-4 text-sm sm:text-base max-w-xl leading-relaxed" data-i18n="bookSub">
+          六章 · 关于情绪、焦虑、低落、关系、关怀与求助
+        </p>
+      </div>
+
+      <!-- 章节列表由 JS 渲染 -->
+      <ol id="chapter-list" class="mt-10 border-t border-white/10"></ol>
+
+    </div>
+  </section>
+
+  <!-- ---------- 紧急求助 ---------- -->
+  <footer id="help" class="bg-[#0e0d0b] border-t border-white/10 px-5 sm:px-6 md:px-12 lg:px-16 py-20">
+    <div class="max-w-5xl mx-auto">
+      <p class="text-sage/70 text-[11px] tracking-[0.32em] uppercase mb-3" data-i18n="helpLabel">Crisis support</p>
+      <h2 class="font-display text-2xl sm:text-3xl text-cream mb-8" data-i18n="helpTitle">如果你现在就需要帮助</h2>
+
+      <div class="grid sm:grid-cols-3 gap-8 sm:gap-6">
+        <a href="tel:4001619995" class="group block">
+          <p class="text-cream/45 text-xs mb-2" data-i18n="hotline1Name">希望 24 热线</p>
+          <p class="font-display text-xl sm:text-2xl text-cream group-hover:text-sage transition-colors">400-161-9995</p>
+          <p class="text-cream/35 text-xs mt-2">24 小时</p>
+        </a>
+        <a href="tel:01082951332" class="group block">
+          <p class="text-cream/45 text-xs mb-2" data-i18n="hotline2Name">北京心理危机研究与干预中心</p>
+          <p class="font-display text-xl sm:text-2xl text-cream group-hover:text-sage transition-colors">010-8295-1332</p>
+          <p class="text-cream/35 text-xs mt-2">24 小时</p>
+        </a>
+        <a href="tel:12356" class="group block">
+          <p class="text-cream/45 text-xs mb-2" data-i18n="hotline3Name">全国统一心理援助热线</p>
+          <p class="font-display text-xl sm:text-2xl text-cream group-hover:text-sage transition-colors">12356</p>
+          <p class="text-cream/35 text-xs mt-2" data-i18n="hotline3Note">各地接入</p>
+        </a>
+      </div>
+
+      <p class="text-cream/35 text-xs sm:text-sm mt-10 leading-relaxed max-w-2xl" data-i18n="helpNote">
+        如果你不在中国大陆，请联系当地急救号码（120 / 911 / 999）或当地危机干预热线。你不是负担，你是值得被接住的人。
+      </p>
+    </div>
+  </footer>
+
+</main>
+
+
+<!-- ============ 章节视图 ============ -->
+<main id="view-chapter" class="hidden">
+  <div class="min-h-screen bg-[#0e0d0b] px-5 sm:px-6 md:px-12 lg:px-16 py-8 sm:py-12">
+    <div class="max-w-3xl mx-auto">
+
+      <!-- 顶部条 -->
+      <div class="flex items-center justify-between mb-14">
+        <button id="back-btn"
+                class="group flex items-center gap-2 text-cream/60 hover:text-cream text-sm font-medium transition-colors">
+          <svg class="w-4 h-4 transition-transform group-hover:-translate-x-1" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 19l-7-7 7-7"/>
+          </svg>
+          <span data-i18n="back">返回</span>
+        </button>
+
+        <div class="flex items-center gap-4">
+          <button id="lang-toggle-chapter" class="text-cream/60 hover:text-cream text-sm font-medium transition-colors tracking-wide">EN</button>
+          <span id="chapter-progress" class="text-cream/35 text-xs tabular-nums tracking-widest"></span>
+        </div>
+      </div>
+
+      <!-- 章节内容 -->
+      <article id="chapter-body"></article>
+
+      <!-- 上一章 / 下一章 -->
+      <div id="chapter-nav" class="border-t border-white/10 mt-20 pt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4"></div>
+
+    </div>
+  </div>
+</main>
+
+
+<script>
+/* =========================================================
+   数据：文案
+   ========================================================= */
+const T = {
+  zh: {
+    brandZh: '心岸',
+    navBook: '小书',
+    navQuotes: '一些话',
+    navHelp: '紧急求助',
+    ctaStart: '开始倾诉',
+    ctaQuotes: '先看几句话',
+    badge: '安全 · 无评判 · 随时在这里',
+    h1: '你看起来有一些困惑，<br>需要心理疏导',
+    sub: '不用马上讲清楚。你可以从任何一句话开始，我们会一直在这里，慢慢听。',
+    quotesLabel: 'Some words',
+    q1: '你不需要马上好起来。',
+    q2: '允许自己停在这里，也是一种前进。',
+    q3: '所有情绪都是路标，不是判决。',
+    q4: '说出来，就已经是一种勇敢。',
+    bookLabel: 'A small book',
+    bookTitle: '一本关于照顾自己的小书',
+    bookSub: '六章 · 关于情绪、焦虑、低落、关系、关怀与求助',
+    readChapter: '阅读本章',
+    back: '返回',
+    helpLabel: 'Crisis support',
+    helpTitle: '如果你现在就需要帮助',
+    hotline1Name: '希望 24 热线',
+    hotline2Name: '北京心理危机研究与干预中心',
+    hotline3Name: '全国统一心理援助热线',
+    hotline3Note: '各地接入',
+    helpNote: '如果你不在中国大陆，请联系当地急救号码（120 / 911 / 999）或当地危机干预热线。你不是负担，你是值得被接住的人。',
+    prev: '上一章',
+    next: '下一章',
+    endOfBook: '你已经读到这里了。辛苦了。',
+    chapterLabel: '第'
+  },
+  en: {
+    brandZh: '心岸',
+    navBook: 'The book',
+    navQuotes: 'Some words',
+    navHelp: 'Crisis help',
+    ctaStart: 'Start talking',
+    ctaQuotes: 'Read a few lines',
+    badge: 'Safe · Non-judgmental · Always here',
+    h1: 'You seem a little lost.<br>You might need some support.',
+    sub: "You don't have to explain it clearly right away. Start with any sentence — we'll be here, listening slowly.",
+    quotesLabel: 'Some words',
+    q1: "You don't have to be okay right away.",
+    q2: 'Letting yourself pause here is also a way forward.',
+    q3: 'Every emotion is a signpost, not a verdict.',
+    q4: 'Saying it out loud is already a kind of courage.',
+    bookLabel: 'A small book',
+    bookTitle: 'A small book about taking care of yourself',
+    bookSub: 'Six chapters · on emotion, anxiety, low mood, relationships, self-compassion and asking for help',
+    readChapter: 'Read this chapter',
+    back: 'Back',
+    helpLabel: 'Crisis support',
+    helpTitle: 'If you need help right now',
+    hotline1Name: 'Hope 24 Hotline',
+    hotline2Name: 'Beijing Crisis Research & Intervention Center',
+    hotline3Name: 'National Psychological Aid Hotline',
+    hotline3Note: 'Regional access',
+    helpNote: "If you're outside mainland China, contact your local emergency number (120 / 911 / 999) or a local crisis line. You are not a burden. You are someone worth catching.",
+    prev: 'Previous',
+    next: 'Next',
+    endOfBook: "You've reached the end. Thank you for staying with yourself.",
+    chapterLabel: 'Chapter'
+  }
+};
+
+/* =========================================================
+   数据：章节
+   ========================================================= */
+const CHAPTERS = [
+  {
+    id: 'ch1', num: '01',
+    tag:  { zh: '基础', en: 'Foundation' },
+    title:{ zh: '理解情绪', en: 'Understanding Emotions' },
+    sub:  { zh: '情绪从何而来，为什么它从不出错', en: 'Where emotions come from, and why they are never wrong' },
+    body: [
+      { type:'p', zh:'情绪不是需要被消灭的故障。它是一套比语言更早、比理智更快的身体信号系统。', en:'Emotions are not a malfunction to be eliminated. They are a body-signal system older than language and faster than reason.' },
+      { type:'p', zh:'当你感到胸口发紧、喉咙发堵、眼眶发热，那不是「太脆弱」，而是身体在说：这里有事需要被看见。', en:"When your chest tightens, your throat closes, your eyes heat up — that isn't fragility. It's the body saying: something here needs to be seen." },
+      { type:'h', zh:'情绪的三种功能', en:'What emotions actually do' },
+      { type:'p', zh:'预警 —— 恐惧告诉你危险在哪里。连接 —— 悲伤让他人靠近你。导航 —— 愤怒标出你的边界被侵犯了。', en:'Warning — fear tells you where the danger is. Connection — sadness brings others closer. Navigation — anger marks where a boundary was crossed.' },
+      { type:'p', zh:'它们都不需要被立刻解决，只需要被承认。', en:'None of them need to be solved immediately. They only need to be acknowledged.' },
+      { type:'q', zh:'情绪是信使。杀死信使，你只会失去方向。', en:'Emotions are messengers. Kill the messenger and you lose your direction.' },
+      { type:'h', zh:'一个五分钟的练习', en:'A five-minute practice' },
+      { type:'p', zh:'找个安静的地方坐下，闭上眼睛。问自己：「我现在感受到的是什么？」', en:'Sit somewhere quiet. Close your eyes. Ask yourself: "What am I feeling right now?"' },
+      { type:'p', zh:'不评判、不分析，只是命名它：紧张、疲惫、委屈、空、麻木。', en:"Don't judge. Don't analyze. Just name it — tense, tired, hurt, empty, numb." },
+      { type:'p', zh:'命名的动作本身，就已经让大脑从「被淹没」回到「可观察」。你不需要马上好起来。', en:"The act of naming already moves the brain from flooded back to observable. You don't need to be okay right away." }
+    ]
+  },
+  {
+    id: 'ch2', num: '02',
+    tag:  { zh: '身体', en: 'Body' },
+    title:{ zh: '与焦虑共处', en: 'Living with Anxiety' },
+    sub:  { zh: '当身体比语言先知道', en: 'When the body knows before words do' },
+    body: [
+      { type:'p', zh:'焦虑常常没有具体对象。你说不清自己在怕什么，但心跳很快、手心是湿的、脑子停不下来。', en:"Anxiety often has no clear object. You can't say what you're afraid of, but your heart races, your palms are wet, your mind won't stop." },
+      { type:'p', zh:'这不是「想太多」。这是神经系统把某个模糊的威胁，误判成了必须立刻处理的紧急事件。', en:"This isn't overthinking. It's the nervous system mistaking a vague threat for an emergency that must be handled now." },
+      { type:'h', zh:'焦虑其实在保护你', en:'Anxiety is trying to protect you' },
+      { type:'p', zh:'只是它用的方式 —— 过度警觉、反复预演、灾难化想象 —— 代价太高了。', en:"It's just that its methods — hypervigilance, endless rehearsal, catastrophic imagining — cost far too much." },
+      { type:'h', zh:'着陆练习 5-4-3-2-1', en:'Grounding: 5-4-3-2-1' },
+      { type:'p', zh:'说出 5 件你能看到的东西。4 件你能摸到的。3 个你能听到的声音。2 种你能闻到的气味。1 个你能尝到的味道。', en:'Name 5 things you can see. 4 you can touch. 3 sounds you can hear. 2 scents you can smell. 1 taste you can notice.' },
+      { type:'p', zh:'这个练习不解决焦虑的源头。但它把你从「未来的灾难」拉回「此刻的房间」。而此刻，通常是安全的。', en:'This doesn\'t solve the source of the anxiety. But it pulls you from "a future disaster" back to "this room." And this moment is usually safe.' },
+      { type:'q', zh:'焦虑不是因为你想太多，是因为你太久没有被允许停下来。', en:"Anxiety isn't because you think too much. It's because you've gone too long without being allowed to stop." }
+    ]
+  },
+  {
+    id: 'ch3', num: '03',
+    tag:  { zh: '能量', en: 'Energy' },
+    title:{ zh: '关于低落', en: 'On Low Mood' },
+    sub:  { zh: '不是懒，是耗竭', en: "It's not laziness. It's depletion." },
+    body: [
+      { type:'p', zh:'低落的时候，连起床都需要一个理由。然后你会责怪自己：我怎么这么没用。', en:"On a low day, even getting up needs a reason. And then you blame yourself: what's wrong with me." },
+      { type:'p', zh:'但低落不是意志力的问题。它更像电量耗尽 —— 不是你不愿意跑，是电池真的空了。', en:"But low mood isn't a willpower problem. It's more like a drained battery — not that you won't run, but that the battery is genuinely empty." },
+      { type:'h', zh:'能量守恒', en:'Energy is conserved' },
+      { type:'p', zh:'人在长期压力、失眠、孤独、或者没被处理的悲伤之后，会进入一种低功耗模式。', en:'After prolonged stress, insomnia, loneliness, or unprocessed grief, the body drops into a low-power mode.' },
+      { type:'p', zh:'这不是退步。这是保护。', en:"This isn't regression. It's protection." },
+      { type:'h', zh:'从最小的单位开始', en:'Start with the smallest unit' },
+      { type:'p', zh:'不要设「今天要运动一小时」这种目标。设「今天把窗帘拉开」。完成它，然后允许自己什么都不做。', en:'Don\'t set a goal like "exercise for an hour today." Set "open the curtains today." Do that, and then allow yourself to do nothing else.' },
+      { type:'p', zh:'恢复不是一条直线。会有反复。反复不代表你失败了 —— 它代表你还在动。', en:"Recovery isn't a straight line. There will be setbacks. A setback doesn't mean you failed — it means you're still moving." },
+      { type:'q', zh:'你不需要变得更好，才配被善待。你现在就配。', en:'You don\'t have to become better to deserve kindness. You deserve it now.' }
+    ]
+  },
+  {
+    id: 'ch4', num: '04',
+    tag:  { zh: '关系', en: 'Relationships' },
+    title:{ zh: '关系与边界', en: 'Relationships & Boundaries' },
+    sub:  { zh: '如何不委屈地靠近一个人', en: 'How to get close without disappearing' },
+    body: [
+      { type:'p', zh:'很多人不敢设边界，因为怕被讨厌、怕失去、怕被说「你怎么变了」。', en:'Many people are afraid to set boundaries — afraid of being disliked, of losing someone, of hearing "you\'ve changed."' },
+      { type:'h', zh:'边界不是墙', en:'Boundaries are not walls' },
+      { type:'p', zh:'墙是「你别过来」。边界是「你可以过来，但请从这扇门进」。', en:'A wall says: stay away. A boundary says: you can come in, but through this door.' },
+      { type:'p', zh:'它是为了让关系能持续，而不是为了切断关系。', en:'Boundaries exist to keep the relationship sustainable, not to end it.' },
+      { type:'h', zh:'说不的练习', en:'Practicing "no"' },
+      { type:'p', zh:'从最小的「不」开始。比如「我今天不方便」。不需要解释，也不需要道歉三遍。', en:'Start with the smallest no. "I\'m not available today." No explanation needed. No triple apology needed.' },
+      { type:'p', zh:'如果对方因为你的边界离开，那说明这段关系本来就需要你无限退让才能维持。', en:'If someone leaves because of your boundary, that relationship was only sustainable if you kept disappearing.' },
+      { type:'q', zh:'被讨厌是可以承受的。失去自己不可以。', en:'Being disliked is survivable. Losing yourself is not.' }
+    ]
+  },
+  {
+    id: 'ch5', num: '05',
+    tag:  { zh: '关怀', en: 'Compassion' },
+    title:{ zh: '自我关怀', en: 'Self-Compassion' },
+    sub:  { zh: '把自己当朋友', en: 'Treat yourself like a friend' },
+    body: [
+      { type:'p', zh:'你对朋友说「没关系，你已经很努力了」。对自己说「你怎么又搞砸了」。', en:'To a friend you say: "It\'s okay, you\'ve tried so hard." To yourself you say: "How did you mess this up again."' },
+      { type:'p', zh:'自我关怀不是自我放纵，也不是强行正能量。它只是 —— 用你对待朋友的方式，对待自己。', en:"Self-compassion isn't indulgence, and it isn't forced positivity. It's simply treating yourself the way you'd treat a friend." },
+      { type:'h', zh:'换一句话', en:'Swap the sentence' },
+      { type:'p', zh:'当你想说「我真没用」时，试着说：「我现在很难受，这很正常。」', en:'When you want to say "I\'m useless," try: "I\'m in pain right now. That\'s normal."' },
+      { type:'p', zh:'当你想说「我应该做得更好」时，试着说：「我尽力了，我可以休息一下。」', en:'When you want to say "I should be doing better," try: "I did what I could. I can rest."' },
+      { type:'h', zh:'一个锚', en:'An anchor' },
+      { type:'p', zh:'把手放在胸口，感受心跳。对自己说：「此刻我在，我陪着我。」重复三次。', en:'Put a hand on your chest. Feel your heartbeat. Say to yourself: "I\'m here. I\'m with me." Repeat three times.' },
+      { type:'q', zh:'你不必先变成更好的人，才值得被温柔对待。', en:'You don\'t have to become a better person first to deserve tenderness.' }
+    ]
+  },
+  {
+    id: 'ch6', num: '06',
+    tag:  { zh: '求助', en: 'Support' },
+    title:{ zh: '求助与支持', en: 'Asking for Help' },
+    sub:  { zh: '求助不是软弱，是策略', en: "Asking for help isn't weakness. It's strategy." },
+    body: [
+      { type:'p', zh:'很多人卡在「我不该麻烦别人」。但人类本来就不是独自存活下来的物种。', en:"Many people get stuck at \"I shouldn't be a burden.\" But humans never survived as a species by coping alone." },
+      { type:'h', zh:'什么时候该找专业人士', en:'When to seek professional help' },
+      { type:'p', zh:'情绪持续低落超过两周。睡眠、食欲、工作能力明显受损。出现自伤或自杀的念头。靠酒精、暴食、购物来缓解痛苦。', en:'Low mood lasting more than two weeks. Noticeable damage to sleep, appetite, or work capacity. Thoughts of self-harm or suicide. Relying on alcohol, bingeing, or shopping to numb the pain.' },
+      { type:'p', zh:'最后一条出现时，请立刻联系下面的热线，或者身边任何一个你信任的人。不要等到「更严重」。', en:"If the last one applies, contact a hotline below or anyone you trust right now. Don't wait for it to get worse." },
+      { type:'h', zh:'危机热线（中国大陆）', en:'Crisis lines (mainland China)' },
+      { type:'p', zh:'希望 24 热线：400-161-9995（24 小时）。北京心理危机研究与干预中心：010-8295-1332。全国统一心理援助热线：12356。', en:'Hope 24: 400-161-9995 (24h). Beijing Suicide Research and Prevention Center: 010-8295-1332. National Psychological Aid Hotline: 12356.' },
+      { type:'p', zh:'如果你不在中国大陆，请联系当地急救（120 / 911 / 999）或当地危机干预热线。', en:'Outside mainland China, contact your local emergency number (120 / 911 / 999) or a local crisis line.' },
+      { type:'q', zh:'你不是负担。你是值得被接住的人。', en:'You are not a burden. You are someone worth catching.' }
+    ]
+  }
+];
+
+
+/* =========================================================
+   状态
+   ========================================================= */
+const state = {
+  lang: 'zh',
+  currentChapter: null
+};
+
+const $  = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+
+
+/* =========================================================
+   渲染
+   ========================================================= */
+function t(key) {
+  return (T[state.lang] && T[state.lang][key]) || '';
+}
+
+function applyStaticText() {
+  $$('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if (T[state.lang][key] != null) el.textContent = T[state.lang][key];
+  });
+  $$('[data-i18n-html]').forEach(el => {
+    const key = el.dataset.i18nHtml;
+    if (T[state.lang][key] != null) el.innerHTML = T[state.lang][key];
+  });
+  // 语言按钮
+  const label = state.lang === 'zh' ? 'EN' : '中';
+  $$('#lang-toggle-desktop, #lang-toggle-mobile, #lang-toggle-chapter').forEach(b => {
+    if (b) b.textContent = label;
+  });
+  document.documentElement.lang = state.lang === 'zh' ? 'zh-CN' : 'en';
+}
+
+function renderChapterList() {
+  const ol = $('#chapter-list');
+  if (!ol) return;
+  ol.innerHTML = CHAPTERS.map(ch => `
+    <li class="border-b border-white/10">
+      <button type="button"
+              class="chapter-row group w-full text-left py-8 sm:py-10 px-3 sm:px-5 flex items-start gap-5 sm:gap-8"
+              data-chapter="${ch.id}">
+        <span class="font-display text-sm sm:text-base text-sage/60 tabular-nums pt-1.5 shrink-0 w-8">
+          ${ch.num}
+        </span>
+        <span class="flex-1 min-w-0">
+          <span class="flex items-baseline justify-between gap-4">
+            <span class="font-display text-xl sm:text-2xl md:text-3xl text-cream font-medium leading-tight tracking-[-0.01em]">
+              ${ch.title[state.lang]}
+            </span>
+            <svg class="chapter-arrow w-4 h-4 sm:w-5 sm:h-5 text-cream/25 shrink-0"
+                 viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6"/>
+            </svg>
+          </span>
+          <span class="block text-cream/45 text-sm sm:text-base mt-2 leading-relaxed">
+            ${ch.sub[state.lang]}
+          </span>
+          <span class="inline-block mt-3 text-[11px] tracking-[0.2em] uppercase text-cream/30">
+            ${ch.tag[state.lang]}
+          </span>
+        </span>
+      </button>
+    </li>
+  `).join('');
+
+  // 绑定点击
+  $$('#chapter-list [data-chapter]').forEach(btn => {
+    btn.addEventListener('click', () => openChapter(btn.dataset.chapter));
+  });
+}
+
+function renderChapterBody(ch) {
+  const L = state.lang;
+
+  const bodyHTML = ch.body.map(block => {
+    const text = block[L] || '';
+    if (block.type === 'h') return `<h3>${text}</h3>`;
+    if (block.type === 'q') return `<blockquote>${text}</blockquote>`;
+    return `<p>${text}</p>`;
+  }).join('');
+
+  const idx = CHAPTERS.findIndex(c => c.id === ch.id);
+  const prev = CHAPTERS[idx - 1];
+  const next = CHAPTERS[idx + 1];
+
+  const navHTML = `
+    ${prev
+      ? `<button type="button" data-nav="${prev.id}"
+                 class="text-left group flex-1 py-3">
+           <span class="block text-cream/35 text-[11px] tracking-[0.2em] uppercase mb-1.5">${t('prev')}</span>
+           <span class="font-display text-base sm:text-lg text-cream/80 group-hover:text-cream transition-colors">
+             ${prev.num} · ${prev.title[L]}
+           </span>
+         </button>`
+      : `<span class="hidden sm:block flex-1"></span>`}
+    ${next
+      ? `<button type="button" data-nav="${next.id}"
+                 class="text-right group flex-1 py-3">
+           <span class="block text-cream/35 text-[11px] tracking-[0.2em] uppercase mb-1.5">${t('next')}</span>
+           <span class="font-display text-base sm:text-lg text-cream/80 group-hover:text-cream transition-colors">
+             ${next.num} · ${next.title[L]}
+           </span>
+         </button>`
+      : `<span class="text-right flex-1 py-3">
+           <span class="block text-cream/35 text-[11px] tracking-[0.2em] uppercase mb-1.5">·</span>
+           <span class="text-cream/45 text-sm">${t('endOfBook')}</span>
+         </span>`}
+  `;
+
+  $('#chapter-body').innerHTML = `
+    <header class="mb-14">
+      <div class="flex items-center gap-3 text-cream/35 text-[11px] tracking-[0.24em] uppercase mb-6">
+        <span>${t('chapterLabel')} ${ch.num}</span>
+        <span class="w-6 h-px bg-cream/20"></span>
+        <span>${ch.tag[L]}</span>
+      </div>
+      <h1 class="font-display text-3xl sm:text-4xl md:text-5xl text-cream font-medium leading-tight tracking-[-0.02em]">
+        ${ch.title[L]}
+      </h1>
+      <p class="text-cream/50 text-base sm:text-lg mt-5 leading-relaxed">
+        ${ch.sub[L]}
+      </p>
+    </header>
+    <div class="prose-soft">
+      ${bodyHTML}
+    </div>
+  `;
+
+  $('#chapter-progress').textContent = `${ch.num} / ${String(CHAPTERS.length).padStart(2, '0')}`;
+  $('#chapter-nav').innerHTML = navHTML;
+
+  $$('#chapter-nav [data-nav]').forEach(b => {
+    b.addEventListener('click', () => openChapter(b.dataset.nav));
+  });
+}
+
+function applyAll() {
+  applyStaticText();
+  renderChapterList();
+  if (state.currentChapter) {
+    const ch = CHAPTERS.find(c => c.id === state.currentChapter);
+    if (ch) renderChapterBody(ch);
+  }
+}
+
+
+/* =========================================================
+   视图切换
+   ========================================================= */
+function openChapter(id) {
+  const ch = CHAPTERS.find(c => c.id === id);
+  if (!ch) return;
+  state.currentChapter = id;
+
+  renderChapterBody(ch);
+
+  $('#view-home').classList.add('hidden');
+  const cv = $('#view-chapter');
+  cv.classList.remove('hidden');
+  cv.classList.remove('view');
+  void cv.offsetWidth; // 重启动画
+  cv.classList.add('view');
+
+  window.scrollTo({ top: 0, behavior: 'auto' });
+  closeMobileMenu();
+}
+
+function closeChapter() {
+  state.currentChapter = null;
+  $('#view-chapter').classList.add('hidden');
+  const hv = $('#view-home');
+  hv.classList.remove('hidden');
+  hv.classList.remove('view');
+  void hv.offsetWidth;
+  hv.classList.add('view');
+  window.scrollTo({ top: 0, behavior: 'auto' });
+}
+
+
+/* =========================================================
+   语言切换
+   ========================================================= */
+function toggleLang() {
+  state.lang = state.lang === 'zh' ? 'en' : 'zh';
+  applyAll();
+}
+
+
+/* =========================================================
+   移动端菜单
+   ========================================================= */
+const menuBtn  = $('#menu-btn');
+const menuPanel = $('#mobile-menu');
+const iconBurger = $('#icon-burger');
+const iconClose  = $('#icon-close');
+let menuOpen = false;
+
+function setMenuOpen(open) {
+  menuOpen = open;
+  menuBtn.setAttribute('aria-expanded', String(open));
+  menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Menu');
+
+  if (open) {
+    menuPanel.classList.remove('opacity-0', '-translate-y-3', 'pointer-events-none');
+    iconBurger.classList.add('rotate-90', 'scale-0', 'opacity-0');
+    iconClose.classList.remove('rotate-90', 'scale-0', 'opacity-0');
+  } else {
+    menuPanel.classList.add('opacity-0', '-translate-y-3', 'pointer-events-none');
+    iconBurger.classList.remove('rotate-90', 'scale-0', 'opacity-0');
+    iconClose.classList.add('rotate-90', 'scale-0', 'opacity-0');
+  }
+}
+
+function closeMobileMenu() { setMenuOpen(false); }
+
+menuBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  setMenuOpen(!menuOpen);
+});
+
+$$('.mobile-link').forEach(a => a.addEventListener('click', closeMobileMenu));
+
+document.addEventListener('click', (e) => {
+  if (!menuOpen) return;
+  if (!menuBtn.contains(e.target) && !menuPanel.contains(e.target)) {
+    closeMobileMenu();
+  }
+});
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    if (menuOpen) closeMobileMenu();
+    if (state.currentChapter) closeChapter();
+  }
+});
+
+
+/* =========================================================
+   事件绑定
+   ========================================================= */
+$('#back-btn').addEventListener('click', closeChapter);
+$$('#lang-toggle-desktop, #lang-toggle-mobile, #lang-toggle-chapter').forEach(btn => {
+  btn.addEventListener('click', toggleLang);
+});
+
+
+/* =========================================================
+   背景视频兜底播放
+   ========================================================= */
+(function ensureVideo() {
+  const v = document.querySelector('video');
+  if (!v) return;
+  v.muted = true;
+
+  const tryPlay = () => {
+    if (v.paused) {
+      const p = v.play();
+      if (p && typeof p.catch === 'function') p.catch(() => {});
+    }
+  };
+
+  tryPlay();
+  v.addEventListener('canplay', tryPlay);
+
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) tryPlay();
+  });
+
+  const once = () => {
+    tryPlay();
+    ['pointerdown', 'touchstart', 'scroll'].forEach(ev =>
+      window.removeEventListener(ev, once, { passive: true })
+    );
+  };
+  ['pointerdown', 'touchstart', 'scroll'].forEach(ev =>
+    window.addEventListener(ev, once, { passive: true })
+  );
+})();
+
+
+/* =========================================================
+   启动
+   ========================================================= */
+applyAll();
+setMenuOpen(false);
+</script>
+
+</body>
+</html>
